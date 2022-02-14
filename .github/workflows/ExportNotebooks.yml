@@ -25,15 +25,17 @@ jobs:
             - name: Run Pluto notebooks and generate website
               shell: julia --color=yes {0}
               run: |
+                olddir = pwd()
                 cd("newwebsite")
+                dir = pwd()
                 run(`cp generate.jl generate2.jl`)
                 using Pkg
                 Pkg.add("Pluto")
                 import Pluto
-                Pluto.activate_notebook_environment("generate2.jl")
+                Pluto.activate_notebook_environment(joinpath(dir, "generate2.jl"))
                 Pkg.instantiate()
-                include("./generate.jl")
-                cd("..")
+                include(joinpath(dir, "generate.jl"))
+                cd(olddir)
             - name: Build and Deploy
               uses: JamesIves/github-pages-deploy-action@releases/v3
               with:
