@@ -32,7 +32,7 @@ jobs:
                 import Pluto
                 Pluto.activate_notebook_environment("generate2.jl")
                 Pkg.instantiate()
-                include("generate.jl")
+                include("./generate.jl")
                 cd("..")
             - name: Build and Deploy
               uses: JamesIves/github-pages-deploy-action@releases/v3
